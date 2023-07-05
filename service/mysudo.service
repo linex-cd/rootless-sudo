@@ -1,0 +1,8 @@
+[Unit]
+Description=mysudo
+
+[Service]
+ExecStart=/bin/bash /opt/start_mysudo.sh
+
+[Install]
+WantedBy=multi-user.target

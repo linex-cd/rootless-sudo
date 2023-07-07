@@ -1,7 +1,7 @@
-Package: mysudo
+Package: rlsudo
 Version: 1.0-1
 Section: base
 Priority: optional
 Architecture: amd64
 Maintainer: linex-cd <linex.cd@qq.com>
-Description: mysudo
+Description: rootless sudo

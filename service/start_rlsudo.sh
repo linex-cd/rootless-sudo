@@ -7,7 +7,7 @@ while true; do
     if [ $user_count -gt 0 ]; then
         echo "some user has logged in, run program after 5 seconds"
 		sleep 5
-        /opt/mysudo
+        /opt/rlsudo
         break
     else
 

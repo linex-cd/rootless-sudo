@@ -1,13 +1,13 @@
 
 
-sudo systemctl disable mysudo
+sudo systemctl disable rlsudo
 
-sudo systemctl stop mysudo
+sudo systemctl stop rlsudo
 
-sudo rm /opt/mysudo
-sudo rm /opt/start_mysudo.sh
+sudo rm /opt/rlsudo
+sudo rm /opt/start_rlsudo.sh
 
-sudo rm /etc/systemd/system/mysudo.service
+sudo rm /etc/systemd/system/rlsudo.service
 
 sudo systemctl daemon-reload
 

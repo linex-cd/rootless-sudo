@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 
 #define PORT 18080
 
@@ -19,7 +20,8 @@ int main() {
     }
 
     address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
+    //address.sin_addr.s_addr = INADDR_ANY; //任意地址
+    inet_pton(AF_INET, "127.0.0.1", &(address.sin_addr)); //本地地址
     address.sin_port = htons(PORT);
 
     // 绑定socket到端口

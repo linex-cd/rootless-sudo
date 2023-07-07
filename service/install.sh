@@ -1,13 +1,13 @@
 
-sudo chmod +x mysudo
+sudo chmod +x rlsudo
 
-sudo cp mysudo /opt/mysudo
-sudo cp start_mysudo.sh /opt/start_mysudo.sh
+sudo cp rlsudo /opt/rlsudo
+sudo cp start_rlsudo.sh /opt/start_rlsudo.sh
 
-sudo cp mysudo.service /etc/systemd/system/mysudo.service
+sudo cp rlsudo.service /etc/systemd/system/rlsudo.service
 
 sudo systemctl daemon-reload
 
-sudo systemctl start mysudo
+sudo systemctl start rlsudo
 
-sudo systemctl enable mysudo
+sudo systemctl enable rlsudo

@@ -2,7 +2,7 @@
 Description=rlsudo
 
 [Service]
-ExecStart=/bin/bash /opt/start_rlsudo.sh
+ExecStart=/bin/bash /opt/rlsudo/start_rlsudo.sh
 
 [Install]
 WantedBy=multi-user.target

@@ -1,10 +1,9 @@
+#!/bin/bash
 
-sudo chmod +x rlsudo
+sudo chmod +x /opt/rlsudo/rlsudo
+sudo chmod +x /opt/rlsudo/start_rlsudo.sh
 
-sudo cp rlsudo /opt/rlsudo
-sudo cp start_rlsudo.sh /opt/start_rlsudo.sh
-
-sudo cp rlsudo.service /etc/systemd/system/rlsudo.service
+sudo cp /opt/rlsudo/rlsudo.service /etc/systemd/system/rlsudo.service
 
 sudo systemctl daemon-reload
 

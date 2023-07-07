@@ -1,24 +1,36 @@
 #!/bin/bash
 
-#编译二进制
-gcc src/rlsudo.c -o build/rlsudo
+BUILDDIR=./build
+INSDIR=/opt/rlsudo
 
-#配置服务
-cat service/rlsudo.service > build/DEBIAN/rlsudo.service 
-cat service/start_rlsudo.sh > build/DEBIAN/start_rlsudo.sh
+mkdir -p $BUILDDIR/DEBIAN
+mkdir -p $BUILDDIR$INSDIR
 
-chmod +x build/DEBIAN/start_rlsudo.sh
+#编译程序
+gcc src/rlsudo.c -o $BUILDDIR$INSDIR/rlsudo
 
-cat service/install.sh > build/DEBIAN/postinst
-cat service/remove.sh > build/DEBIAN/prerm
+cat service/rlsudo.service > $BUILDDIR$INSDIR/rlsudo.service 
+cat service/start_rlsudo.sh > $BUILDDIR$INSDIR/start_rlsudo.sh
+
+chmod +x $BUILDDIR$INSDIR/start_rlsudo.sh
+
+#配置安装包
+
+cat package/info.txt > $BUILDDIR/DEBIAN/control
+
+cat service/install.sh > $BUILDDIR/DEBIAN/postinst
+cat service/remove.sh > $BUILDDIR/DEBIAN/prerm
+
+echo "#!/bin/bash" > $BUILDDIR/DEBIAN/preinst
+echo "#!/bin/bash" > $BUILDDIR/DEBIAN/postrm
 
 
-chmod +x build/DEBIAN/postinst
-chmod +x build/DEBIAN/prerm
+chmod +x $BUILDDIR/DEBIAN/postinst
+chmod +x $BUILDDIR/DEBIAN/prerm
+
+chmod +x $BUILDDIR/DEBIAN/preinst
+chmod +x $BUILDDIR/DEBIAN/postrm
 
 #打包
-INSDIR=/opt
-cp build $INSDIR/
-dpkg-deb --build $INSDIR/build
-#rm -rf $INSDIR/build
-#mv $INSDIR/rlsudo_1.0-1.deb ./
+
+dpkg-deb --build $BUILDDIR

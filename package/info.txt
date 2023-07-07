@@ -2,6 +2,6 @@ Package: rlsudo
 Version: 1.0-1
 Section: base
 Priority: optional
-Architecture: amd64
+Architecture: arm64
 Maintainer: linex-cd <linex.cd@qq.com>
 Description: rootless sudo

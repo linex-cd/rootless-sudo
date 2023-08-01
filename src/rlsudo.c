@@ -6,7 +6,37 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#include <pthread.h>
+
 #define PORT 18080
+
+void* client_thread(void *conn)
+{
+    int new_socket = (int)conn;
+    char buffer[30000] = {0};
+    read(new_socket, buffer, 30000);
+    printf("%s\n", buffer);
+
+    char command[256] = {0};
+    //sscanf(buffer, "GET /%s ", command);
+    sscanf(buffer, "GET %s ", command);
+    printf("Command: %s\n", command);
+
+    char *args[] = {"/bin/bash", "-c", command, NULL};
+
+    if (fork() == 0) {
+        if (execvp(args[0], args) == -1) {
+            perror("execvp");
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    char *response = "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 12\n\nok";
+    write(new_socket, response, strlen(response));
+    printf("------------------executing command done-------------------\n");
+    close(new_socket);
+}
+
 
 int main() {
     int server_fd, new_socket;
@@ -44,28 +74,10 @@ int main() {
             exit(EXIT_FAILURE);
         }
 
-        char buffer[30000] = {0};
-        read(new_socket, buffer, 30000);
-        printf("%s\n", buffer);
-
-        char command[256] = {0};
-        //sscanf(buffer, "GET /%s ", command);
-        sscanf(buffer, "GET %s ", command);
-        printf("Command: %s\n", command);
-
-        char *args[] = {"/bin/bash", "-c", command, NULL};
-
-        if (fork() == 0) {
-            if (execvp(args[0], args) == -1) {
-                perror("execvp");
-                exit(EXIT_FAILURE);
-            }
-        }
-
-        char *response = "HTTP/1.1 200 OK\nContent-Type: text/plain\nContent-Length: 12\n\nHello world!";
-        write(new_socket, response, strlen(response));
-        printf("------------------Hello message sent-------------------\n");
-        close(new_socket);
+        //use a thread to process connection
+        pthread_t thread;
+        pthread_create(&thread, NULL, client_thread, (void *)new_socket);
+        
     }
 
     return 0;
